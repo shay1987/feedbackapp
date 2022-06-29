@@ -1,0 +1,26 @@
+apiVersion: v1
+architecture: replicaset
+replicaCount: 1
+auth:
+  enabled: true
+  rootpassword: admin
+  rootUser: admin
+  databases: [ "customer" ]
+  usernames: [ "admin" ]
+  passwords: [ "admin" ]
+service:
+  nameOverride: mongo
+persistence: 
+  enabled: true
+metadata:
+  namespace: feedback
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: feed-app
+  namespace: feedback
+stringData:
+  MONGODB_URI: 'mongodb://admin:admin@mongo-mongodb-0.mongo-mongodb-headless.default.svc.cluster.local:27017'

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Input deletion</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel="stylesheet"  href="static/style.css?v=1.0.199">
+    </head>
+    <body>
+        <script>
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            document.getElementById("currentDate").value = date;
+        </script>
+
+        <div class="form">
+        <h3 style="text-align: center;">Input deletion</h3>
+        <form action='/delete_one' method="GET">
+        <hl>
+            <strong>Please write a name to delete her/his feedback</strong>
+        </hl>
+            <p>Name to delete:</p><input name='x'class = value />
+            <div style="margin-top: 10px;"><input type="submit" value="Del"></div>
+        </form>
+    </div>
+    </body>
+</html>

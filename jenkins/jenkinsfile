@@ -1,0 +1,90 @@
+pipeline {
+    agent any
+    parameters {
+        string defaultValue: 'refs/heads/*', name: 'BRANCH'
+        booleanParam defaultValue: false, name: 'VERIONED'
+    }
+     
+    stages {
+        stage('ENV Prep'){
+            steps{
+                script{
+                    if (env.REF.split("/")[2] == params.BRANCH.split("/")[2]){
+                    env.VERIONED = true
+                    }
+                    else {
+                        env.VERIONED = false
+                        env.BRANCH = env.REF.split("/")[2]
+                    }
+                }
+            }
+        }
+        stage('Build - dev') {
+            when {environment(name: "VERSIONED", value: 'true')}
+            steps {
+                sh 'docker rm -f feedback'
+                sh '''echo "Pulling Repo"'''
+                git 'http//meiry/'
+                sh 'git checkput dev/${env.BRANCH}'
+                sh 'git config pull.rebase false'
+                sh 'git pull origin dev/${env.BRANCH}''
+                sh '''echo v${env.BRANCH} > v.txt'''
+                sh '''if [ -z $1 ]; then
+	                $1=8000
+                    fi
+                    docker build -t  feedback .''
+            }
+        }
+        stage('Build only') {
+            when {environment(name: "VERSIONED", value: 'true')}
+            steps {
+                sh 'docker rm -f feedback'
+                sh '''echo "Pulling Repo"'''
+                git 'http//meiry/'
+                sh 'git checkput dev/${env.BRANCH}'
+                sh 'git config pull.rebase false'
+                sh 'git pull origin dev/${env.BRANCH}''
+                sh '''echo v${env.BRANCH} > v.txt'''
+                sh '''if [ -z $1 ]; then
+	                $1=8000
+                    fi
+                    docker build -t  feedback .''
+            }
+        }
+        stage('Test') {
+            steps {
+            sh ''if [ -z $1 ]; then
+	                $1=8000
+                fi
+                docker build -t feedback .
+                docker run -d --name  feedback -p 8000:$1 feedback $1''
+            sleep 10
+            sh 'curl feedback:8000'
+            sh 'docker rm -f feedback'
+            }
+        }
+        stage('Publish') {
+            when {environment(name: "VERSIONED", value: 'true')}
+                steps{
+                    sh 'docker tag feed gcr.io/astral-archive-351007/feed'
+                    sh 'docker push gcr.io/astral-archive-351007/feed:latest'
+                }
+        }
+        stage('Tag') {
+            sh 'docker push gcr.io/astral-archive-351007/feed:latest'
+        }
+        
+        stage('Deploy'){
+            when {environment(name: "VERSIONED", value: 'true')}
+                steps{
+                    sh "docker run -d --name  feedback -p 8000:$1 feed $1"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            emailext attachlog: true, to: 'yaa.meir@gmail.com', subject: 'LOG MAIL'
+        }
+    }
+}
