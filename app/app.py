@@ -15,9 +15,10 @@ app = Flask(__name__)
 # mongo = PyMongo(app)
 # feedback_coll = mongo.customer.customer
 
-client = MongoClient('mongo', 27017, username='admin', password='admin', connect=False)
-data = client["customer"]
-feedback_coll = data["customer"]
+connection_string  = "mongodb://admin:admin@mongodb-0.mongodb-headless:27017"
+client = MongoClient(connection_string)
+# data = client["customer"]
+# feedback_coll = data["customer"]
 
 
 @app.route("/")
@@ -27,6 +28,8 @@ def form():
 
 @app.route("/read")
 def read_data():
+    db = client.customer
+    feedback_coll = db.customer
     customer = (feedback_coll.find({}))
     return render_template('index.html', customer=customer)
 
@@ -39,6 +42,8 @@ def show_data():
         feed = request.args.get("z")
     if name != "" and phone != "" and feed != "":
         var = {"name": name, "phone": phone, "feedback": feed}
+        db = client.customer
+        feedback_coll = db.customer
         feedback_coll.insert_one(var)
         return render_template('retind.html')
     else:
@@ -55,12 +60,16 @@ def del_one():
     destroy = request.args.get("d")
     to = "'"
     to_destroy = str(to+destroy+to)
+    db = client.customer
+    feedback_coll = db.customer
     feedback_coll.delete_one({"name": str(to_destroy)})
     return ("Deleted")
 
 
 @app.route("/delete_all")
 def delete_all():
+    db = client.customer
+    feedback_coll = db.customer
     feedback_coll.delete_many({})
     return "All data deleted"
 
