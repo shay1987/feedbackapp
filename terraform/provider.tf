@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 0.14"
 
   backend "gcs" {
-    bucket  = "feedback-prod"
+    bucket  = "feedback-pro"
     prefix  = "terraform/state"
   }
 }

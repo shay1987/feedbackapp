@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "The project ID to host the cluster in"
-  default = "astral-archive-351007"
+  default = "feisty-deck-351210"
 }
 variable "cluster_name" {
   description = "The name for the GKE cluster"
@@ -33,7 +33,7 @@ variable "ip_range_services_name" {
 
 variable "bucket_name" {
   description = "Bucket name"
-  default     = "feedback-prod"
+  default     = "feedback-pro"
 }
 
 variable "disk_name" {

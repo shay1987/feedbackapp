@@ -48,7 +48,7 @@ Next, you need to link your account to the gcloud CLI, and you can do this with:
     gcloud services enable storage.googleapis.com
 
 ### Creating buckt (for tfstat file)
-    gsutil mb -p PROJECT_ID gs://feedback-prod
+    gsutil mb -p feisty-deck-351210 gs://feedback-pro
 
 First step is to provision a cluster using Terraform files located in terraform folder:
 
@@ -72,7 +72,7 @@ what happend?
 Terraform created cluster in Gcloud and bucket to save the state-file that was created.
 
 ## 2. Connecting to the cluster:
-    gcloud container clusters get-credentials feedback-prod --region europe-west1 --project "project_name"
+    gcloud container clusters get-credentials feedback-prod --region europe-west1 --project feisty-deck-351210
 
 Enable the Cloud Storage API:
 
