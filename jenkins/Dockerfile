@@ -37,7 +37,7 @@ RUN curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-co
 # RUN apt-get update && apt-get install -y google-cloud-cli
 
 #replace docker group
-RUN delgroup docker && addgroup -gid 135 docker
+RUN delgroup docker && addgroup -gid 1221 docker
 
 # give jenkins docker rights
 RUN usermod -aG docker jenkins

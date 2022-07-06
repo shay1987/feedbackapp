@@ -18,9 +18,9 @@ renderHelmLabels: true
 controller:
   # Used for label app.kubernetes.io/component
   componentName: "jenkins-controller"
-  image: "gcr.io/feisty-deck-351210/jenkinsdocker"
-  # tag: "2.332.3-jdk11"
-  tagLabel: jdk11
+  image: "gcr.io/feisty-deck-351210/jenkins"
+  tag: "latest"
+  # tagLabel: jdk11
   imagePullPolicy: "Always"
   imagePullSecretName:
   # Optionally configure lifetime for controller-container

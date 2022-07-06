@@ -109,9 +109,9 @@ get inside the app folder
 that will build an image of the app
 next push it to your cloud repo for using it at gcp you will have to use these commands:
     
-    docker tag feed gcr.io/project_name/feed
+    docker tag feed gcr.io/feisty-deck-351210/feed
     docker tag feed gcr.io/astral-archive-351007/feed
-    docker push gcr.io/project_name/feed
+    docker push gcr.io/feisty-deck-351210/feed
     docker push gcr.io/astral-archive-351007/feed
 
 If you got an error during the push because of the authentication enter :
@@ -129,8 +129,8 @@ At first run inside jenkins folder the command:
 that will build an image of jenkins
 next push it to your cloud repo for using it while installing jenkins, at gcp you will have to use these commands:
 
-    docker tag jenkins gcr.io/project_name/jenkins
-    docker push gcr.io/project_name/jenkins
+    docker tag jenkins gcr.io/feisty-deck-351210/jenkins
+    docker push gcr.io/feisty-deck-351210/jenkins
 
 make sure to cahnge the image path in the values.yaml file (line 21) then run these commands:
 

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: feed-app
-        image: gcr.io/astral-archive-351007/feedback
+        image: gcr.io/feisty-deck-351210/feedback
         ports:
         - containerPort: 8000
         envFrom:
